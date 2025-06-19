@@ -27,8 +27,6 @@ import SearchBar from './SearchBar';
 
 const SchemaTree = ({ schema, onNodeSelect }) => {
     const [selectedNode, setSelectedNode] = useState(null);
-    const [searchResults, setSearchResults] = useState([]);
-    const [showSearchResults, setShowSearchResults] = useState(false);
 
     const handleNodeClick = (node, type) => {
         const nodeData = { ...node, nodeType: type };
@@ -46,8 +44,8 @@ const SchemaTree = ({ schema, onNodeSelect }) => {
     };
 
     const handleSearchResults = (results) => {
-        setSearchResults(results);
-        setShowSearchResults(results.length > 0);
+        // Search functionality can be implemented here if needed
+        console.log('Search results:', results);
     };
 
     if (!schema) {

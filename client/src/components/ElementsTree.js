@@ -4,9 +4,6 @@ import {
   Typography, 
   Paper, 
   Alert,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   List,
   ListItem,
   ListItemButton,
@@ -18,9 +15,7 @@ import {
   IconButton
 } from '@mui/material';
 import { 
-  ExpandMore,
   Schema,
-  Category,
   KeyboardArrowDown,
   KeyboardArrowRight,
   Circle
