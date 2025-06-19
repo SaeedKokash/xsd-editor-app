@@ -1,0 +1,35 @@
+{
+  "name": "xsd-editor-app",
+  "version": "1.0.0",
+  "description": "XSD Editor Application with React frontend and Node.js backend",
+  "private": true,  "scripts": {
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "cd client && npm start",
+    "server": "cd server && npm run dev",
+    "build": "cd client && npm run build",
+    "test": "cd client && npm test && cd ../server && npm test",
+    "test-deployment": "npm run build && echo 'Build successful! Ready for deployment'",
+    "deploy:frontend": "cd client && npm run build && echo 'Frontend built! Deploy the build folder to Netlify'",
+    "deploy:backend": "echo 'Push to GitHub and deploy server folder to Railway/Render'",
+    "deploy:help": "echo 'See QUICK_DEPLOYMENT.md for step-by-step deployment instructions'"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "xsd",
+    "xml",
+    "schema",
+    "editor",
+    "react",
+    "nodejs",
+    "express"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/xsd-editor-app.git"
+  }
+}

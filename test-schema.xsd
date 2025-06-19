@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           targetNamespace="http://example.com/test"
+           xmlns:tns="http://example.com/test"
+           elementFormDefault="qualified">
+
+    <!-- Root element -->
+    <xs:element name="Document" type="tns:DocumentType">
+        <xs:annotation>
+            <xs:documentation>Main document element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!-- Complex types -->
+    <xs:complexType name="DocumentType">
+        <xs:sequence>
+            <xs:element name="Header" type="tns:HeaderType"/>
+            <xs:element name="Body" type="tns:BodyType"/>
+            <xs:element name="Footer" type="tns:FooterType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="HeaderType">
+        <xs:sequence>
+            <xs:element name="Title" type="xs:string"/>
+            <xs:element name="Date" type="xs:date"/>
+            <xs:element name="Author" type="tns:PersonType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BodyType">
+        <xs:sequence>
+            <xs:element name="Section" type="tns:SectionType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SectionType">
+        <xs:sequence>
+            <xs:element name="Title" type="xs:string"/>
+            <xs:element name="Content" type="xs:string"/>
+            <xs:element name="Subsection" type="tns:SectionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PersonType">
+        <xs:sequence>
+            <xs:element name="FirstName" type="xs:string"/>
+            <xs:element name="LastName" type="xs:string"/>
+            <xs:element name="Email" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FooterType">
+        <xs:sequence>
+            <xs:element name="Copyright" type="xs:string"/>
+            <xs:element name="Version" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Simple types -->
+    <xs:simpleType name="StatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="active"/>
+            <xs:enumeration value="inactive"/>
+            <xs:enumeration value="pending"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

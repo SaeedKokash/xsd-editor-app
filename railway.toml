@@ -1,0 +1,13 @@
+# Railway.toml - Railway deployment configuration
+[build]
+  dockerPath = "server"
+
+[deploy]
+  runtime = "nodejs"
+  startCommand = "npm start"
+  buildCommand = "npm install"
+
+[deploy.healthCheck]
+  path = "/health"
+  timeout = 30
+  interval = 30
