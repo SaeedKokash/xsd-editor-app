@@ -2,10 +2,19 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+// Debug logging for deployment troubleshooting
+console.log('API Configuration:', {
+    REACT_APP_API_URL: process.env.REACT_APP_API_URL,
+    API_BASE_URL: API_BASE_URL,
+    NODE_ENV: process.env.NODE_ENV
+});
+
 export const uploadXSD = async (file) => {
     const formData = new FormData();
     formData.append('xsdFile', file); // Changed from 'file' to 'xsdFile' to match backend
 
+    console.log(`Making API request to: ${API_BASE_URL}/xsd/upload`);
+    
     try {
         const response = await axios.post(`${API_BASE_URL}/xsd/upload`, formData, {
             headers: {
@@ -15,6 +24,7 @@ export const uploadXSD = async (file) => {
         return response.data; // Assuming the response contains the parsed schema
     } catch (error) {
         console.error('Error uploading XSD file:', error);
+        console.error('Failed URL:', `${API_BASE_URL}/xsd/upload`);
         throw error;
     }
 };
