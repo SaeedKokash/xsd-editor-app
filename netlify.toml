@@ -6,6 +6,7 @@
 [build.environment]
   NODE_VERSION = "18"
   CI = "false"
+  REACT_APP_API_URL = "https://xsd-editor-app.onrender.com/api"
 
 [[redirects]]
   from = "/*"
@@ -13,7 +14,7 @@
   status = 200
 
 [context.production.environment]
-  REACT_APP_API_URL = "https://your-backend-url.railway.app/api"
+  REACT_APP_API_URL = "https://xsd-editor-app.onrender.com/api"
 
 [context.deploy-preview.environment]
-  REACT_APP_API_URL = "https://your-backend-url.railway.app/api"
+  REACT_APP_API_URL = "https://xsd-editor-app.onrender.com/api"
