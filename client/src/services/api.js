@@ -9,6 +9,29 @@ console.log('API Configuration:', {
     NODE_ENV: process.env.NODE_ENV
 });
 
+// Create an axios instance with the base URL configured
+const apiClient = axios.create({
+    baseURL: API_BASE_URL,
+    timeout: 30000, // 30 seconds timeout
+});
+
+// Add request interceptor for debugging
+apiClient.interceptors.request.use(
+    (config) => {
+        console.log('API Request:', {
+            method: config.method.toUpperCase(),
+            url: config.url,
+            baseURL: config.baseURL,
+            fullURL: `${config.baseURL}${config.url}`
+        });
+        return config;
+    },
+    (error) => {
+        console.error('Request interceptor error:', error);
+        return Promise.reject(error);
+    }
+);
+
 export const uploadXSD = async (file) => {
     const formData = new FormData();
     formData.append('xsdFile', file); // Changed from 'file' to 'xsdFile' to match backend
@@ -16,7 +39,7 @@ export const uploadXSD = async (file) => {
     console.log(`Making API request to: ${API_BASE_URL}/xsd/upload`);
     
     try {
-        const response = await axios.post(`${API_BASE_URL}/xsd/upload`, formData, {
+        const response = await apiClient.post('/xsd/upload', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -31,7 +54,7 @@ export const uploadXSD = async (file) => {
 
 export const getParsedSchema = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/schema`);
+        const response = await apiClient.get('/schema');
         return response.data; // Assuming the response contains the parsed schema
     } catch (error) {
         console.error('Error fetching parsed schema:', error);
@@ -41,7 +64,7 @@ export const getParsedSchema = async () => {
 
 export const saveModifiedSchema = async (modifiedSchema) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/save`, modifiedSchema);
+        const response = await apiClient.post('/save', modifiedSchema);
         return response.data; // Assuming the response contains the success message or modified XSD
     } catch (error) {
         console.error('Error saving modified schema:', error);
@@ -51,7 +74,7 @@ export const saveModifiedSchema = async (modifiedSchema) => {
 
 export const updateElement = async (schema, elementPath, elementData) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/xsd/update-element`, {
+        const response = await apiClient.post('/xsd/update-element', {
             schema,
             elementPath,
             elementData
@@ -65,7 +88,7 @@ export const updateElement = async (schema, elementPath, elementData) => {
 
 export const validateXMLAgainstXSD = async (schema, xmlContent) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/xsd/validate-xml`, {
+        const response = await apiClient.post('/xsd/validate-xml', {
             schema,
             xmlContent
         });
@@ -78,7 +101,7 @@ export const validateXMLAgainstXSD = async (schema, xmlContent) => {
 
 export const generateXSD = async (schema, fileName) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/xsd/generate`, {
+        const response = await apiClient.post('/xsd/generate', {
             schema,
             fileName
         }, {
