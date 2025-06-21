@@ -10,7 +10,7 @@ import {
   LinearProgress 
 } from '@mui/material';
 import { CloudUpload, Description } from '@mui/icons-material';
-import axios from 'axios';
+import { uploadXSD } from '../services/api';
 
 const FileUploader = ({ onUpload }) => {
     const [file, setFile] = useState(null);
@@ -59,26 +59,19 @@ const FileUploader = ({ onUpload }) => {
         setError('');
         setSuccess('');
 
-        const formData = new FormData();
-        formData.append('xsdFile', file);
-
         try {
-            const response = await axios.post('/api/xsd/upload', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
+            const response = await uploadXSD(file);
 
-            if (response.data.success) {
-                console.log('Upload successful, full response:', response.data);
-                console.log('Schema data:', response.data.data.schema);
+            if (response.success) {
+                console.log('Upload successful, full response:', response);
+                console.log('Schema data:', response.data.schema);
                 
-                setSuccess(`Successfully parsed ${response.data.data.metadata.fileName}`);
+                setSuccess(`Successfully parsed ${response.data.metadata.fileName}`);
                 
                 // Call the onUpload callback with the parsed schema
                 if (onUpload) {
-                    console.log('Calling onUpload with schema:', response.data.data.schema);
-                    onUpload(response.data.data.schema);
+                    console.log('Calling onUpload with schema:', response.data.schema);
+                    onUpload(response.data.schema);
                 }
             } else {
                 setError('Failed to parse XSD file. Please check the file format.');
